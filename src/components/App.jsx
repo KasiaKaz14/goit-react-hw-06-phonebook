@@ -23,6 +23,14 @@ export function App() {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
+  const findContacts = evt => {
+    dispatch(setFilter(evt.target.value));
+  };
+
+  const filterSearch = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
   const handleSubmit = evt => {
     evt.preventDefault();
     const form = evt.target;
@@ -47,19 +55,6 @@ export function App() {
     );
   };
 
-  const findContacts = evt => {
-    dispatch(setFilter(evt.target.value));
-  };
-
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-    Notiflix.Notify.success(`${deleteContact.name} has been removed`);
-  };
-
-  const filterSearch = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
     <div
       style={{
@@ -75,7 +70,7 @@ export function App() {
       <Form onSubmit={handleSubmit} />
       <h2>Contacts</h2>
       <Filter onChange={findContacts} filter={filter} />
-      <ContactList onClick={handleDelete} contacts={filterSearch} />
+      <ContactList onClick={deleteContact} contacts={filterSearch} />
     </div>
   );
 }
