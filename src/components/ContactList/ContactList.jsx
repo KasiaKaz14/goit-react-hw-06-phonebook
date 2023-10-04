@@ -1,12 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { getFilteredContacts } from 'Redux/selectors';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'Redux/actions';
+import { getFilteredContacts } from 'Redux/selectors';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getFilteredContacts);
+
+  const handleDeleteContact = id => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <div>
@@ -17,7 +21,7 @@ export const ContactList = () => {
               {contact.name}: {contact.number}
               <button
                 className={css.deleteButton}
-                onClick={() => dispatch(deleteContact(contact.id))}
+                onClick={() => handleDeleteContact(contact.id)}
               >
                 Delete
               </button>
