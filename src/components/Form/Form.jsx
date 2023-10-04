@@ -27,6 +27,7 @@ export const Form = () => {
     dispatch(addContact(contact.name, contact.number));
 
     setContact(() => ({ ...INITIAL_STATE }));
+    e.target.reset();
   };
 
   return (
