@@ -1,5 +1,4 @@
 import css from './ContactList.module.css';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from 'Redux/actions';
 import { getFilteredContacts } from 'Redux/selectors';
@@ -31,9 +30,4 @@ export const ContactList = () => {
       ) : null}
     </div>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.array,
-  onClick: PropTypes.func.isRequired,
 };
