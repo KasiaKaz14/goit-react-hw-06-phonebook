@@ -1,21 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addContact, deleteContact, setFilter } from './actions';
+import { addContact, deleteContact, filterContact } from './actions';
+import { Notify } from 'notiflix';
 
-const contactsInitial = [];
+const contactsInitialState = JSON.parse(localStorage.getItem('contacts')) || [];
+const filterInitialState = '';
 
-export const contactsReducer = createReducer(contactsInitial, {
+export const contactsReducer = createReducer(contactsInitialState, {
   [addContact]: (state, action) => {
-    return [...state, action.payload];
+    if (state.map(contact => contact.name).includes(action.payload.name)) {
+      Notify.failure(`${action.payload.name} is already in contacts.`);
+      return state;
+    } else {
+      Notify.success(`${action.payload.name} added to contacts`);
+      return [...state, action.payload];
+    }
   },
+
   [deleteContact]: (state, action) => {
-    return state.filter(contacts => contacts.id !== action.payload);
+    return state.filter(contact => contact.id !== action.payload);
   },
 });
 
-const filterInitial = '';
-
-export const filterReducer = createReducer(filterInitial, {
-  [setFilter]: (_, action) => {
+export const filterReducer = createReducer(filterInitialState, {
+  [filterContact]: (state, action) => {
     return action.payload;
   },
 });

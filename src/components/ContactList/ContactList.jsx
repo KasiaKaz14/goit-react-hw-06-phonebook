@@ -1,15 +1,12 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilteredContacts } from 'Redux/selectors';
 import css from './ContactList.module.css';
 import PropTypes from 'prop-types';
-import Notiflix from 'notiflix';
+import { deleteContact } from 'Redux/actions';
 
-export const ContactList = ({ contacts, deleteContact }) => {
+export const ContactList = () => {
   const dispatch = useDispatch();
-
-  const handleDelete = id => {
-    dispatch(deleteContact(id));
-    Notiflix.Notify.success(`${deleteContact.name} has been removed`);
-  };
+  const contacts = useSelector(getFilteredContacts);
 
   return (
     <div>
@@ -20,7 +17,7 @@ export const ContactList = ({ contacts, deleteContact }) => {
               {contact.name}: {contact.number}
               <button
                 className={css.deleteButton}
-                onClick={() => handleDelete(contact.id)}
+                onClick={() => dispatch(deleteContact(contact.id))}
               >
                 Delete
               </button>
@@ -34,5 +31,5 @@ export const ContactList = ({ contacts, deleteContact }) => {
 
 ContactList.propTypes = {
   contacts: PropTypes.array,
-  handleDelete: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

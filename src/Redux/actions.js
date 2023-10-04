@@ -11,6 +11,6 @@ export const addContact = createAction('contacts/ADD', (name, number) => {
   };
 });
 
-export const setFilter = createAction('filters/SET');
-
+export const setContacts = createAction('contacts/SET');
 export const deleteContact = createAction('contacts/DELETE');
+export const filterContact = createAction('contacts/FILTER');
