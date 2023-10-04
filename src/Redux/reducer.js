@@ -22,7 +22,7 @@ export const contactsReducer = createReducer(contactsInitialState, {
 });
 
 export const filterReducer = createReducer(filterInitialState, {
-  [filterContact]: action => {
+  [filterContact]: (state, action) => {
     return action.payload;
   },
 });
